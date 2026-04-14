@@ -6,3 +6,6 @@ scikit-learn
 lightgbm
 jupyter
 notebook
+fastapi
+uvicorn
+mlflow

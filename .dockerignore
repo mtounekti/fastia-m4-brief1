@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Jupyter
+*.ipynb
+.ipynb_checkpoints/
+
+# MLflow
+mlruns/
+
+# Modèles locaux (régénérés au build)
+models/
+
+# Git
+.git/
+.gitignore
+
+# OS
+.DS_Store
+
+# Graphiques
+graphiques/
