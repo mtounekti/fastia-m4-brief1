@@ -1,4 +1,4 @@
-# M4 Brief 1 – Benchmark de Modèles de Régression
+# 🏠 M4 Brief 1 – Benchmark de Modèles de Régression
 ### Projet FastIA – Dataset Boston Housing
 
 ---
@@ -10,6 +10,7 @@ Ce projet benchmark trois modèles de régression sur le dataset Boston Housing,
 avec une analyse éthique rigoureuse et un pipeline de préparation des données complet.
 
 ---
+
 ## Structure du projet
 
 ```
@@ -26,6 +27,7 @@ fastia-m4-brief1/
 ├── requirements.txt
 └── README.md
 ```
+
 ---
 
 ## Description du dataset
@@ -59,7 +61,7 @@ fastia-m4-brief1/
 
 ---
 
-## Analyse Éthique
+## ⚖️ Analyse Éthique
 
 ### Controverse du Dataset Boston Housing
 
@@ -81,7 +83,7 @@ Ce dataset a été **retiré de scikit-learn en 2023** en raison de la variable 
 
 ---
 
-## Pipeline de traitement
+## 🔧 Pipeline de traitement
 
 1. **Suppression** de `b` (discrimination raciale)
 2. **Suppression** des lignes `medv == 50` (valeurs censurées)
@@ -91,7 +93,7 @@ Ce dataset a été **retiré de scikit-learn en 2023** en raison de la variable 
 
 ---
 
-## Benchmark des modèles
+## 🤖 Benchmark des modèles
 
 ### Résultats (5-fold cross-validation + test set)
 
@@ -103,7 +105,7 @@ Ce dataset a été **retiré de scikit-learn en 2023** en raison de la variable 
 
 ### Interprétation
 
-- **Random Forest** obtient les meilleures performances sur toutes les métriques
+- 🥇 **Random Forest** obtient les meilleures performances sur toutes les métriques
 - **LightGBM** est très proche (R²=0.867) avec un temps d'entraînement plus rapide
 - La **Régression Linéaire** (baseline) confirme que les relations sont non-linéaires
 - Les features les plus prédictives : **`lstat`** (% pauvres) et **`rm`** (nb pièces)
@@ -137,14 +139,87 @@ jupyter notebook benchmark_boston.ipynb
 # Ou exécuter en ligne de commande
 jupyter nbconvert --to notebook --execute benchmark_boston.ipynb --output benchmark_boston.ipynb
 ```
----
-
-## 🔗 Références
-
-- [Harrison & Rubinfeld (1978) – Dataset original](https://www.cs.toronto.edu/~delve/data/boston/bostonDetail.html)
-- [Carlini et al. (2021) – Critique éthique du dataset](https://fairlearn.org/main/user_guide/fairness_in_machine_learning.html)
-- [scikit-learn – Retrait du dataset (2023)](https://github.com/scikit-learn/scikit-learn/issues/16155)
 
 ---
 
-*Brief M4 – Benchmark Régression | FastIA 2025*
+## API FastAPI (Bonus)
+
+```bash
+# Entraîner et sauvegarder le modèle
+python3 scripts/train_and_save.py
+
+# Lancer l'API
+uvicorn app.main:app --reload
+```
+
+Documentation Swagger : **http://localhost:8000/docs**
+
+| Route | Méthode | Description |
+|---|---|---|
+| `/` | GET | Infos API et performances |
+| `/health` | GET | Santé de l'API |
+| `/predict` | POST | Prédiction du prix médian |
+
+### Exemple de réponse
+
+```json
+{
+  "prix_median_predit_k": 24.5,
+  "prix_median_predit_dollars": 24500,
+  "intervalle_confiance": {
+    "borne_basse_k": 21.3,
+    "borne_haute_k": 27.7
+  },
+  "modele": "Random Forest – R²=0.882"
+}
+```
+
+---
+
+## MLflow (Bonus)
+
+```bash
+# Voir les runs d'entraînement
+mlflow ui
+# → http://localhost:5000
+```
+
+Métriques trackées : `test_rmse`, `test_mae`, `test_r2`, `cv_rmse_mean`, `cv_r2_mean`
+
+---
+
+## 🐳 Docker (Bonus)
+
+```bash
+# build et lancement avec docker-compose
+docker-compose up
+
+# Ou manuellement
+docker build -t fastia-boston .
+docker run -p 8000:8000 fastia-boston
+```
+
+L'image entraîne automatiquement le modèle au build puis expose l'API sur le port 8000.
+
+---
+
+## Structure complète
+
+```
+fastia-m4-brief1/
+├── benchmark_boston.ipynb     # Notebook principal
+├── scripts/
+│   └── train_and_save.py      # Entraînement + MLflow + sauvegarde
+├── app/
+│   ├── __init__.py
+│   └── main.py                # API FastAPI
+├── graphiques/                # Visualisations générées
+├── Dockerfile                 # Conteneurisation
+├── docker-compose.yml         # Orchestration
+├── requirements.txt
+└── README.md
+```
+
+---
+
+*Brief M4 – Benchmark Régression | FastIA 2025 by Maroua Tounekti*
