@@ -1,3 +1,4 @@
+cat > .gitignore << 'EOF'
 # Python
 __pycache__/
 *.py[cod]
@@ -11,5 +12,10 @@ venv/
 # Données
 *.csv
 
+# MLflow & modèles générés
+mlruns/
+models/
+
 # OS
 .DS_Store
+EOF
